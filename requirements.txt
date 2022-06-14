@@ -2,3 +2,7 @@ python-dotenv
 aiohttp
 asyncio
 requests
+urllib3
+argparse
+ssl
+response
