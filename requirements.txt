@@ -2,3 +2,5 @@ urllib3
 argparse
 ssl
 response
+aiohttp
+asyncio
