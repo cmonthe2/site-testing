@@ -6,6 +6,10 @@ http response code.
 
 ## How to use?
 
+git clone https://github.com/PatrickAlphaC/async-python
+cd site-testing
+pip install -r requirements.txt
+
 Use the package in following manner:
 
 ```bash
