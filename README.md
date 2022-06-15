@@ -22,6 +22,8 @@ python3 main.py -u https://abc.xyz
 OR
 ```bash
 python3 main.py --infile /user/url.txt 
+
+ python3 main.py --infile filename 
 ```
 ## Output                                                     
    https://abc.com  active , Where active or inactive are  the response for https://abc.com
