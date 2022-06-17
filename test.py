@@ -1,14 +1,24 @@
 import argparse
 import ssl
 import asyncio
-from response import get_url_from_file, check_response, get_urls
+import time
+from response import get_url_from_file, check_response, get_urls, check_response_sync
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--infile", "-f", type=str, required=False)
     parser.add_argument("--url", "-u", nargs='*', required=False)
+    parser.add_argument("--asyncc", "-a", action='store_true')
     return parser.parse_args()
+
+
+def async_execute(urls, ssl_context):
+    # creating tasks for asynchronous execution
+    tasks = []
+    for url in urls:
+        tasks.append(asyncio.Task(check_response(url, ssl_context)))
+    yield from asyncio.gather(*tasks)
 
 
 def main():
@@ -29,13 +39,16 @@ def main():
     else:
         print("You haven't passed url or file")
 
-    # creating tasks for asynchronous execution
-    tasks = []
-    for url in urls:
-        tasks.append(asyncio.Task(check_response(url, ssl_context)))
-    yield from asyncio.gather(*tasks)
+    if args.asyncc:
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(async_execute(urls, ssl_context))
+    else:
+        for url in urls:
+            check_response_sync(url, ssl_context)
 
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    start = time.time()
+    main()
+    end = time.time()
+    print("Time taken(in second): ", end - start)
