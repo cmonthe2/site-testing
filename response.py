@@ -42,3 +42,16 @@ async def check_response(url, ssl_context):
     else:
         status = "inactive"
     print("{}  {}".format(url, status))
+
+
+def check_response_sync(url, ssl_context):
+    """Check the response of url and returns exception type if error"""
+    try:
+        response_code = urllib.request.urlopen(url, context=ssl_context).getcode()
+    except urllib.error.URLError as e:
+        response_code = 404
+    if response_code == 200:
+        status = "active"
+    else:
+        status = "inactive"
+    print("{}  {}".format(url, status))
