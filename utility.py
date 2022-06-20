@@ -55,3 +55,4 @@ def check_response_sync(url, ssl_context):
     else:
         status = "inactive"
     print("{}  {}".format(url, status))
+
